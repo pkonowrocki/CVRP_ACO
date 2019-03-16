@@ -3,7 +3,13 @@ import re
 def getData(fileName):
     f = open(fileName, "r")
     content = f.read()
-    optimalValue = re.search("Optimal value: (\d+)", content, re.MULTILINE).group(1)
+    optimalValue = re.search("Optimal value: (\d+)", content, re.MULTILINE)
+    if(optimalValue != None):
+        optimalValue = optimalValue.group(1)
+    else:
+        optimalValue = re.search("Best value: (\d+)", content, re.MULTILINE)
+        if(optimalValue != None):
+            optimalValue = optimalValue.group(1)
     capacity = re.search("^CAPACITY : (\d+)$", content, re.MULTILINE).group(1)
     graph = re.findall(r"^(\d+) (\d+) (\d+)$", content, re.MULTILINE)
     demand = re.findall(r"^(\d+) (\d+)$", content, re.MULTILINE)
